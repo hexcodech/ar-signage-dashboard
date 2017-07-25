@@ -1,0 +1,15 @@
+* {
+  min-height: 0;
+  min-width: 0;
+}
+
+.slider-wrapper{
+  width: 100%;
+  height: 200px;
+
+  background-color: #DDD;
+}
+
+.slider-wrapper div{
+  float: left;
+}

@@ -17,7 +17,7 @@ app.use(require("webpack-hot-middleware")(compiler));
 
 app.use("/css", express.static(path.resolve(__dirname, "../src/css")));
 app.use("/img", express.static(path.resolve(__dirname, "../src/img")));
-app.use("/js", express.static(path.resolve(__dirname, "../ssrc/js")));
+app.use("/js", express.static(path.resolve(__dirname, "../src/js")));
 
 app.get("*", (req, res) => {
 	res.sendFile(path.resolve(__dirname, "../src/index.html"));

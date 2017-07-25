@@ -1,6 +1,7 @@
 import React from "react";
 
 import Header from "./Header";
+import Carousel from "./Carousel";
 
 import "./Layout.scss";
 
@@ -20,6 +21,7 @@ export default class Layout extends React.Component {
     return (
       <div styleName="layout">
         <Header />
+        <Carousel />
       </div>
     );
   }
