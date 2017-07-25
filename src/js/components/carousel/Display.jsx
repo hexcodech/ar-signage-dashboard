@@ -3,9 +3,9 @@ import React from "react";
 import CloseCircleOutlineIcon from 'node_modules/mdi-react/CloseCircleOutlineIcon';
 import PencilCircleOutlineIcon from 'node_modules/mdi-react/PencilCircleOutlineIcon';
 
-import "./Screen.scss";
+import "./Display.scss";
 
-export default class Screen extends React.Component {
+export default class Display extends React.Component {
   constructor (){
     super();
   }
@@ -15,7 +15,7 @@ export default class Screen extends React.Component {
   }
 
   render() {
-    let classes = "screen";
+    let classes = "display";
     if( this.props.target == this.props.id ){
       classes += " target";
     }

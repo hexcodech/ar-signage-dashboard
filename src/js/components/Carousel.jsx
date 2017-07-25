@@ -2,20 +2,20 @@ import React from "react";
 
 import "./Carousel.scss";
 
-import Screen from "js/components/carousel/Screen"
+import Display from "js/components/carousel/Display"
 
 export default class Carousel extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      targetScreen : ""
+      targetDisplay : ""
     }
   }
 
   handleSelect(id) {
     this.setState((prevState, props) => {
-      return {targetScreen: id};
+      return {targetDisplay: id};
     });
   }
 
@@ -35,15 +35,15 @@ export default class Carousel extends React.Component {
 
     return (
       <div styleName="slider-wrapper">
-        <Screen
-          id="screen1"
-          target={this.state.targetScreen}
+        <Display
+          id="display1"
+          target={this.state.targetDisplay}
           media={media1}
           handleSelect={this.handleSelect.bind(this)}
         />
-        <Screen
-          id="screen2"
-          target={this.state.targetScreen}
+        <Display
+          id="display2"
+          target={this.state.targetDisplay}
           media={media2}
           handleSelect={this.handleSelect.bind(this)}
         />
