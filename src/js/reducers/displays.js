@@ -1,20 +1,44 @@
 const displays = (
 	state = [
 		{
-			id: "display1",
+			displayId: "display1",
+			friendlyName: "Hotel",
 			media: {
 				type: null,
 				thumbnail: null,
 				remaining: 0
-			}
+			},
+			didInvalidate: true
 		},
 		{
-			id: "display2",
+			displayId: "display2",
+			friendlyName: "Autogarage",
+			media: {
+				type: null,
+				thumbnail: null,
+				remaining: 0
+			},
+			didInvalidate: true
+		},
+		{
+			displayId: "display3",
+			friendlyName: "Kasino",
 			media: {
 				type: "image/jpg",
 				thumbnail: "/img/ar-test.jpg",
 				remaining: 0
-			}
+			},
+			didInvalidate: true
+		},
+		{
+			displayId: "display4",
+			friendlyName: "Minions",
+			media: {
+				type: null,
+				thumbnail: null,
+				remaining: 0
+			},
+			didInvalidate: true
 		}
 	],
 	action
@@ -52,7 +76,7 @@ const displays = (
 			});
 		case "INVALIDATE_DISPLAY":
 			return state.map(display => {
-				return display.id == action.id
+				return display.displayId == action.displayId
 					? { ...display, didInvalidate: true }
 					: display;
 			});
@@ -62,7 +86,7 @@ const displays = (
 		case "PUT_DISPLAY":
 			return [
 				...state.filter(display => {
-					return display.id != action.display.id;
+					return display.displayId != action.display.displayId;
 				}),
 				{
 					...action.display,
@@ -73,7 +97,7 @@ const displays = (
 		case "RECEIVE_DISPLAY":
 			return [
 				...state.filter(display => {
-					return display.id != action.display.id;
+					return display.displayId != action.display.displayId;
 				}),
 				{
 					...action.display,
@@ -84,7 +108,7 @@ const displays = (
 			];
 		case "SET_DISPLAY_TARGET":
 			return state.map(display => {
-				return { ...display, target: display.id == action.displayId };
+				return { ...display, target: display.displayId == action.displayId };
 			});
 		default:
 			return state;

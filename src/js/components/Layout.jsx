@@ -1,7 +1,8 @@
 import React from "react";
 
-import Header from "./Header";
-import Carousel from "./Carousel";
+import Header from "js/components/Header";
+import Carousel from "js/components/Carousel";
+import Hints from "js/components/Hints";
 
 import "./Layout.scss";
 
@@ -10,6 +11,7 @@ const Layout = () => {
 		<div styleName="layout">
 			<Header />
 			<Carousel />
+			<Hints />
 		</div>
 	);
 };

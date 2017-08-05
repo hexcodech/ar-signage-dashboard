@@ -58,10 +58,10 @@ const shouldFetchDisplays = (state = {}) => {
 	return displays.length === 0;
 };
 
-export const fetchDisplaysIfNeeded = (accessToken = "") => {
+export const fetchDisplaysIfNeeded = () => {
 	return (dispatch, getState) => {
 		if (shouldFetchDisplays(getState())) {
-			return dispatch(fetchDisplays(accessToken));
+			return dispatch(fetchDisplays());
 		} else {
 			return Promise.resolve();
 		}

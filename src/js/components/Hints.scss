@@ -1,0 +1,26 @@
+.hints-wrapper {
+	margin: 1rem;
+}
+
+.hints {
+	display: flex;
+	align-items: center;
+	align-content: center;
+	flex-flow: row;
+	flex-wrap: wrap;
+}
+
+.hint {
+	position: relative;
+
+	width: 20rem;
+	height: 11.25rem;
+	margin: 1rem 1rem 0 0;
+
+	border: #222 3px solid;
+	border-radius: 5px;
+
+	background-color: #222;
+	background-size: 100% auto;
+	background-clip: content-box;
+}

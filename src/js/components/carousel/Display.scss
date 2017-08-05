@@ -1,12 +1,14 @@
+.display-wrapper {
+	margin: 1rem 0 1rem 1rem;
+}
+
 .display {
 	position: relative;
 
-	width: 320px;
-	height: 180px;
+	width: 20rem;
+	height: 11.25rem;
 
-	margin: 10px;
-
-	border: 3px solid #222;
+	border: #222 3px solid;
 	border-radius: 5px;
 
 	background-color: #222;
@@ -16,7 +18,7 @@
 
 .display-target {
 	composes: display;
-	border: 3px solid #b11c20;
+	border: #b11c20 3px solid;
 }
 
 .overlay {

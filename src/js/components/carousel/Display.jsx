@@ -8,7 +8,7 @@ import PencilCircleOutlineIcon from "mdi-react/PencilCircleOutlineIcon";
 
 import "./Display.scss";
 
-const Display = ({ dispatch, id, media, target }) => {
+const Display = ({ dispatch, displayId, friendlyName, media, target }) => {
 	let styles = {};
 
 	if (media.type && media.type.startsWith("image")) {
@@ -16,16 +16,21 @@ const Display = ({ dispatch, id, media, target }) => {
 	}
 
 	return (
-		<div styleName={target ? "display-target" : "display"} style={styles}>
-			<div
-				styleName="overlay"
-				onClick={() => {
-					dispatch(setTarget(id));
-				}}
-			>
-				<div styleName="icons">
-					<CloseCircleOutlineIcon styleName="icon" />
-					<PencilCircleOutlineIcon styleName="icon" />
+		<div styleName="display-wrapper">
+			<h4>
+				{friendlyName}
+			</h4>
+			<div styleName={target ? "display-target" : "display"} style={styles}>
+				<div
+					styleName="overlay"
+					onClick={() => {
+						dispatch(setTarget(displayId));
+					}}
+				>
+					<div styleName="icons">
+						<CloseCircleOutlineIcon styleName="icon" />
+						<PencilCircleOutlineIcon styleName="icon" />
+					</div>
 				</div>
 			</div>
 		</div>

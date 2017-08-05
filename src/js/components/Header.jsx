@@ -16,30 +16,52 @@ const Header = ({ dispatch }) => {
 					</div>
 				</div>
 				<div styleName="side">
+					<FlipClock />
 					<ul styleName="menu">
 						<li
 							onClick={() => {
-								dispatch(resetTimer());
+								dispatch(startTimer());
 							}}
 						>
-							reset
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="300"
+								height="300"
+								viewBox="0 0 300 300"
+							>
+								<path d="M300 150L75 279.9L75 20.1z" fill="#ffffff" />
+							</svg>
 						</li>
 						<li
 							onClick={() => {
 								dispatch(stopTimer());
 							}}
 						>
-							stop
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="300"
+								height="300"
+								viewBox="0 0 300 300"
+							>
+								<rect x="25" y="0" width="75" height="300" fill="#ffffff" />
+								<rect x="200" y="0" width="75" height="300" fill="#ffffff" />
+							</svg>
 						</li>
 						<li
 							onClick={() => {
-								dispatch(startTimer());
+								dispatch(resetTimer());
 							}}
 						>
-							start
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="300"
+								height="300"
+								viewBox="0 0 300 300"
+							>
+								<rect x="50" y="50" width="200" height="200" fill="#ffffff" />
+							</svg>
 						</li>
 					</ul>
-					<FlipClock />
 				</div>
 			</div>
 		</div>
