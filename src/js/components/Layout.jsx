@@ -5,24 +5,13 @@ import Carousel from "./Carousel";
 
 import "./Layout.scss";
 
-export default class Layout extends React.Component {
-  constructor() {
-    super();
-    this.state = {
+const Layout = () => {
+	return (
+		<div styleName="layout">
+			<Header />
+			<Carousel />
+		</div>
+	);
+};
 
-    };
-  }
-
-  changeTitle(title) {
-    this.setState({title});
-  }
-
-  render() {
-    return (
-      <div styleName="layout">
-        <Header />
-        <Carousel />
-      </div>
-    );
-  }
-}
+export default Layout;

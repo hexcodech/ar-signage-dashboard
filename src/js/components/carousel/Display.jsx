@@ -1,43 +1,35 @@
 import React from "react";
+import { connect } from "react-redux";
 
-import CloseCircleOutlineIcon from 'node_modules/mdi-react/CloseCircleOutlineIcon';
-import PencilCircleOutlineIcon from 'node_modules/mdi-react/PencilCircleOutlineIcon';
+import { setTarget } from "js/actions/displays";
+
+import CloseCircleOutlineIcon from "mdi-react/CloseCircleOutlineIcon";
+import PencilCircleOutlineIcon from "mdi-react/PencilCircleOutlineIcon";
 
 import "./Display.scss";
 
-export default class Display extends React.Component {
-  constructor (){
-    super();
-  }
+const Display = ({ dispatch, id, media, target }) => {
+	let styles = {};
 
-  handleSelect(id) {
-    this.props.handleSelect(id);
-  }
+	if (media.type && media.type.startsWith("image")) {
+		styles.backgroundImage = "url(" + media.thumbnail + ")";
+	}
 
-  render() {
-    let classes = "display";
-    if( this.props.target == this.props.id ){
-      classes += " target";
-    }
+	return (
+		<div styleName={target ? "display-target" : "display"} style={styles}>
+			<div
+				styleName="overlay"
+				onClick={() => {
+					dispatch(setTarget(id));
+				}}
+			>
+				<div styleName="icons">
+					<CloseCircleOutlineIcon styleName="icon" />
+					<PencilCircleOutlineIcon styleName="icon" />
+				</div>
+			</div>
+		</div>
+	);
+};
 
-    let styles = {};
-
-    if( this.props.media.type && this.props.media.type.startsWith("image") ) {
-      styles.backgroundImage = 'url('+ this.props.media.thumbnail + ')'
-    }
-
-    return (
-        <div
-          styleName={classes}
-          style={styles}
-        >
-          <div styleName="overlay" onClick={() => this.handleSelect(this.props.id)}>
-            <div styleName="icons">
-              <CloseCircleOutlineIcon styleName="icon" />
-              <PencilCircleOutlineIcon styleName="icon" />
-            </div>
-          </div>
-        </div>
-    );
-  }
-}
+export default connect()(Display);
