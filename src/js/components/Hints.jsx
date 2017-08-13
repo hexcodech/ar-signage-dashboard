@@ -19,11 +19,11 @@ class Hints extends React.Component {
 			<div styleName="hints-wrapper">
 				<div>
 					{[
-						{ mimeType: "image", friendlyName: "Bilder" },
-						{ mimeType: "video", friendlyName: "Videos" }
+						{ type: "image", friendlyName: "Bilder" },
+						{ type: "video", friendlyName: "Videos" }
 					].map(library => {
 						return (
-							<div key={library.mimeType} styleName="mime">
+							<div key={library.type} styleName="mime">
 								<h3>
 									{library.friendlyName}
 								</h3>
@@ -33,7 +33,7 @@ class Hints extends React.Component {
 										.filter(hint => {
 											return (
 												hint.roomId === activeRoom &&
-												hint.mimeType.startsWith(library.mimeType)
+												hint.type.startsWith(library.type)
 											);
 										})
 										.sort((a, b) => (a.url > b.url ? 1 : -1))
@@ -43,7 +43,7 @@ class Hints extends React.Component {
 													key={hint.url}
 													styleName="hint"
 													style={
-														hint.mimeType.startsWith("image/")
+														hint.type.startsWith("image/")
 															? { backgroundImage: "url(" + hint.url + ")" }
 															: {}
 													}
@@ -59,7 +59,7 @@ class Hints extends React.Component {
 																	...target,
 																	media: {
 																		url: hint.url,
-																		type: hint.mimeType
+																		type: hint.type
 																	}
 																})
 															).then(() => {
@@ -68,11 +68,11 @@ class Hints extends React.Component {
 														}
 													}}
 												>
-													{hint.mimeType.startsWith("video")
+													{hint.type.startsWith("video")
 														? <video styleName="video-thumbnail" controls>
 																<source
 																	src={hint.url + "#t=0.1"}
-																	type={hint.mimeType}
+																	type={hint.type}
 																/>
 															</video>
 														: null}

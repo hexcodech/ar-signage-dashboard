@@ -21,7 +21,7 @@ const Display = ({ dispatch, display }) => {
 	let styles = {};
 
 	if (media.type && media.type.startsWith("image")) {
-		styles.backgroundImage = "url(" + media.thumbnail + ")";
+		styles.backgroundImage = "url(" + media.url + ")";
 	}
 
 	return (
@@ -67,6 +67,22 @@ const Display = ({ dispatch, display }) => {
 						/>
 					</div>
 				</div>
+				{media.type && media.type.startsWith("text")
+					? <div styleName="text">
+							{media.text}
+						</div>
+					: null}
+				{media.type && media.type.startsWith("video")
+					? <div>
+							<video styleName="video-thumbnail" muted>
+								<source src={media.url + "#t=0.1"} type={media.type} />
+							</video>
+							<div
+								styleName="progress"
+								style={{ width: media.progress + "%" }}
+							/>
+						</div>
+					: null}
 				{isFetching && <div styleName="message">Aktualisiere...</div>}
 				{didInvalidate &&
 					!isFetching &&

@@ -5,9 +5,9 @@ const displays = (
 			friendlyName: "Hotel",
 			roomId: "room1",
 			media: {
-				type: null,
-				thumbnail: null,
-				remaining: 0
+				url: "http://www.htmgarcia.com/themes/cacoon/images/spaceboundd.mp4",
+				type: "video/mp4",
+				progress: 50
 			},
 			didInvalidate: true
 		},
@@ -16,9 +16,10 @@ const displays = (
 			friendlyName: "Autogarage",
 			roomId: "room1",
 			media: {
-				type: null,
-				thumbnail: null,
-				remaining: 0
+				type: "text/plain",
+				text: "le PENîS",
+				url: null,
+				progress: 0
 			},
 			didInvalidate: true
 		},
@@ -28,8 +29,8 @@ const displays = (
 			roomId: "room1",
 			media: {
 				type: "image/jpg",
-				thumbnail: "/img/ar-test.jpg",
-				remaining: 0
+				url: "/img/ar-test.jpg",
+				progress: 0
 			},
 			didInvalidate: true
 		},
@@ -38,9 +39,11 @@ const displays = (
 			friendlyName: "Minions",
 			roomId: "room1",
 			media: {
-				type: null,
-				thumbnail: null,
-				remaining: 0
+				type: "text/plain",
+				text:
+					"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua",
+				url: null,
+				progress: 0
 			},
 			didInvalidate: true
 		},
@@ -50,8 +53,8 @@ const displays = (
 			roomId: "room2",
 			media: {
 				type: "image/jpg",
-				thumbnail: "/img/ar-test.jpg",
-				remaining: 0
+				url: "/img/ar-test.jpg",
+				progress: 0
 			},
 			didInvalidate: true
 		},
@@ -61,8 +64,8 @@ const displays = (
 			roomId: "room2",
 			media: {
 				type: null,
-				thumbnail: null,
-				remaining: 0
+				url: null,
+				progress: 0
 			},
 			didInvalidate: true
 		}

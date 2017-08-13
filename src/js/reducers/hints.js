@@ -2,19 +2,19 @@ const hints = (
 	state = [
 		{
 			url: "/img/ar-test.jpg",
-			mimeType: "image/jpg",
+			type: "image/jpg",
 			didInvalidate: true,
 			roomId: "room1"
 		},
 		{
 			url: "http://www.htmgarcia.com/themes/cacoon/images/spaceboundd.mp4",
-			mimeType: "video/mp4",
+			type: "video/mp4",
 			didInvalidate: true,
 			roomId: "room1"
 		},
 		{
 			url: "/img/ar-test.jpg",
-			mimeType: "image/jpg",
+			type: "image/jpg",
 			didInvalidate: true,
 			roomId: "room2"
 		}
