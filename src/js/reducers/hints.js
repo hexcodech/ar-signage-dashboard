@@ -2,7 +2,21 @@ const hints = (
 	state = [
 		{
 			url: "/img/ar-test.jpg",
-			didInvalidate: true
+			mimeType: "image/jpg",
+			didInvalidate: true,
+			roomId: "room1"
+		},
+		{
+			url: "http://www.htmgarcia.com/themes/cacoon/images/spaceboundd.mp4",
+			mimeType: "video/mp4",
+			didInvalidate: true,
+			roomId: "room1"
+		},
+		{
+			url: "/img/ar-test.jpg",
+			mimeType: "image/jpg",
+			didInvalidate: true,
+			roomId: "room2"
 		}
 	],
 	action
@@ -21,7 +35,7 @@ const hints = (
 				};
 			});
 
-		case "FAIL_HINT_REQUEST":
+		case "FAIL_HINTS_REQUEST":
 			return state.map(hint => {
 				return {
 					...hint,

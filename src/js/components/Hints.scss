@@ -24,3 +24,34 @@
 	background-size: 100% auto;
 	background-clip: content-box;
 }
+
+.message {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+
+	color: #e74c3c;
+	background-color: #fff;
+
+	padding: .5rem;
+	border-top-right-radius: 5px;
+	box-shadow: 1px -1px 2px 0 rgba(0, 0, 0, 0.2);
+
+	pointer-events: none;
+	opacity: .8;
+}
+
+.message-error {
+	composes: message;
+
+	color: #e74c3c;
+}
+
+.mime {
+	padding: 1rem 0;
+}
+
+.video-thumbnail {
+	width: 100%;
+	height: auto;
+}

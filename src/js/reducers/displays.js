@@ -3,6 +3,7 @@ const displays = (
 		{
 			displayId: "display1",
 			friendlyName: "Hotel",
+			roomId: "room1",
 			media: {
 				type: null,
 				thumbnail: null,
@@ -13,6 +14,7 @@ const displays = (
 		{
 			displayId: "display2",
 			friendlyName: "Autogarage",
+			roomId: "room1",
 			media: {
 				type: null,
 				thumbnail: null,
@@ -23,6 +25,7 @@ const displays = (
 		{
 			displayId: "display3",
 			friendlyName: "Kasino",
+			roomId: "room1",
 			media: {
 				type: "image/jpg",
 				thumbnail: "/img/ar-test.jpg",
@@ -33,6 +36,29 @@ const displays = (
 		{
 			displayId: "display4",
 			friendlyName: "Minions",
+			roomId: "room1",
+			media: {
+				type: null,
+				thumbnail: null,
+				remaining: 0
+			},
+			didInvalidate: true
+		},
+		{
+			displayId: "display5",
+			friendlyName: "Kasino",
+			roomId: "room2",
+			media: {
+				type: "image/jpg",
+				thumbnail: "/img/ar-test.jpg",
+				remaining: 0
+			},
+			didInvalidate: true
+		},
+		{
+			displayId: "display6",
+			friendlyName: "Minions",
+			roomId: "room2",
 			media: {
 				type: null,
 				thumbnail: null,
@@ -43,6 +69,8 @@ const displays = (
 	],
 	action
 ) => {
+	let tmp = {};
+
 	switch (action.type) {
 		case "INVALIDATE_DISPLAYS":
 			return state.map(display => {
@@ -57,7 +85,7 @@ const displays = (
 				};
 			});
 
-		case "FAIL_DISPLAY_REQUEST":
+		case "FAIL_DISPLAYS_REQUEST":
 			return state.map(display => {
 				return {
 					...display,
@@ -82,8 +110,48 @@ const displays = (
 			});
 
 		case "REQUEST_DISPLAY":
-		case "UPDATE_DISPLAY":
 		case "PUT_DISPLAY":
+			return [
+				...state.filter(display => {
+					if (display.displayId === action.display.displayId) {
+						tmp = display;
+						return false;
+					}
+
+					return true;
+				}),
+				{
+					...tmp,
+					isFetching: true
+				}
+			];
+		/*return [
+				...state.filter(display => {
+					return display.displayId != action.display.displayId;
+				}),
+				{
+					...action.display,
+					isFetching: true
+				}
+			];*/
+
+		case "FAIL_DISPLAY_PUT":
+			return [
+				...state.filter(display => {
+					if (display.displayId === action.display.displayId) {
+						tmp = display;
+						return false;
+					}
+
+					return true;
+				}),
+				{
+					...tmp,
+					isFetching: false
+				}
+			];
+
+		case "UPDATE_DISPLAY":
 			return [
 				...state.filter(display => {
 					return display.displayId != action.display.displayId;
@@ -93,7 +161,6 @@ const displays = (
 					isFetching: true
 				}
 			];
-
 		case "RECEIVE_DISPLAY":
 			return [
 				...state.filter(display => {
@@ -105,6 +172,32 @@ const displays = (
 					didInvalidate: false,
 					lastUpdated: action.receivedAt
 				}
+			];
+		case "CLEAR_DISPLAYS":
+			return [
+				...state.filter(
+					display => action.displayIds.indexOf(display.displayId) === -1
+				),
+				...state
+					.filter(
+						display => action.displayIds.indexOf(display.displayId) !== -1
+					)
+					.map(display => {
+						return { ...display, isFetching: true };
+					})
+			];
+		case "FAIL_DISPLAYS_CLEAR":
+			return [
+				...state.filter(
+					display => action.displayIds.indexOf(display.displayId) === -1
+				),
+				...state
+					.filter(
+						display => action.displayIds.indexOf(display.displayId) !== -1
+					)
+					.map(display => {
+						return { ...display, isFetching: false };
+					})
 			];
 		case "SET_DISPLAY_TARGET":
 			return state.map(display => {

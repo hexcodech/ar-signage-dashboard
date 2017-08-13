@@ -1,4 +1,5 @@
 import { fetchApi } from "js/utilities/rest";
+import { receiveRooms } from "js/actions/rooms";
 
 export const invalidateDisplays = () => {
 	return {
@@ -32,7 +33,18 @@ const fetchDisplays = () => {
 		dispatch(requestDisplays());
 
 		return fetchApi("display", "GET", {})
-			.then(displays => {
+			.then(strangeRoomDisplayObjectThingy => {
+				//nobody will read this anyway haha
+				const rooms = strangeRoomDisplayObjectThingy.map(room => {
+					return { roomId: room.roomId, friendlyName: room.friendlyName };
+				});
+				const displays = strangeRoomDisplayObjectThingy.map(room => {
+					return room.displays.map(display => {
+						return { ...display, roomId: room.roomId };
+					});
+				});
+
+				dispatch(receiveRooms(rooms, Date.now()));
 				dispatch(receiveDisplays(displays, Date.now()));
 			})
 			.catch(error => {
@@ -163,7 +175,7 @@ export const putDisplay = (display = {}) => {
 	return dispatch => {
 		dispatch(putDisplay_(display));
 
-		return fetchApi("display/" + display.id, "PUT", { display })
+		return fetchApi("display/" + display.displayId, "PUT", { display })
 			.then(updatedDisplay => {
 				dispatch(receiveDisplay(updatedDisplay, Date.now()));
 
@@ -171,6 +183,55 @@ export const putDisplay = (display = {}) => {
 			})
 			.catch(error => {
 				dispatch(failDisplayPut(error, display));
+				return Promise.reject(error);
+			});
+	};
+};
+
+const clearDisplays_ = (displayIds = []) => {
+	return {
+		type: "CLEAR_DISPLAYS",
+		displayIds
+	};
+};
+
+const failDisplaysClear = (error = {}, displayIds = []) => {
+	return {
+		type: "FAIL_DISPLAYS_CLEAR",
+		error,
+		displayIds
+	};
+};
+
+export const clearDisplays = (displayIds = []) => {
+	return dispatch => {
+		dispatch(clearDisplays_(displayIds));
+
+		return fetchApi("display/clear", "PUT", displayIds)
+			.then(updatedDisplays => {
+				dispatch(receiveDisplays(updatedDisplays, Date.now()));
+
+				return updatedDisplays;
+			})
+			.catch(error => {
+				dispatch(failDisplaysClear(error, displayIds));
+				return Promise.reject(error);
+			});
+	};
+};
+
+export const clearDisplay = (displayId = 0) => {
+	return dispatch => {
+		dispatch(clearDisplays_([displayId]));
+
+		return fetchApi("display/clear", "PUT", [displayId])
+			.then(updatedDisplays => {
+				dispatch(receiveDisplays(updatedDisplays, Date.now()));
+
+				return updatedDisplays;
+			})
+			.catch(error => {
+				dispatch(failDisplaysClear(error, [displayId]));
 				return Promise.reject(error);
 			});
 	};

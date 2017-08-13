@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { fetchDisplaysIfNeeded } from "js/actions/displays";
+import { setActiveRoom } from "js/actions/rooms";
 
 import "./Carousel.scss";
 
@@ -13,13 +14,36 @@ class Carousel extends React.Component {
 	};
 
 	render = () => {
-		const { displays } = this.props;
+		const { dispatch, displays, activeRoom, rooms } = this.props;
 
 		return (
-			<div styleName="slider-wrapper">
-				{displays.map(display => {
-					return <Display key={display.displayId} {...display} />;
-				})}
+			<div styleName="carousel">
+				<div styleName="room-select">
+					<select
+						onChange={e => {
+							dispatch(setActiveRoom(e.currentTarget.value));
+						}}
+					>
+						{rooms.map(room => {
+							return (
+								<option key={room.roomId} value={room.roomId}>
+									{room.friendlyName}
+								</option>
+							);
+						})}
+					</select>
+				</div>
+				<div styleName="slider-wrapper">
+					{displays
+						.filter(display => {
+							return display.roomId === activeRoom;
+						})
+						.sort((a, b) => (a.friendlyName > b.friendlyName ? 1 : -1))
+						.map(display => {
+							window.d = displays;
+							return <Display key={display.displayId} display={display} />;
+						})}
+				</div>
 			</div>
 		);
 	};
@@ -27,7 +51,9 @@ class Carousel extends React.Component {
 
 const mapStateToProps = state => {
 	return {
-		displays: state.app.displays
+		displays: state.app.displays,
+		rooms: state.app.rooms,
+		activeRoom: state.app.activeRoom
 	};
 };
 

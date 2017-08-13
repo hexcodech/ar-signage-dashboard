@@ -1,5 +1,5 @@
 .display-wrapper {
-	margin: 1rem 0 1rem 1rem;
+	margin: 1rem 1rem 1rem 0;
 }
 
 .display {
@@ -52,4 +52,23 @@
 
 	width: 3em;
 	height: 3em;
+}
+
+.message {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+
+	color: #e74c3c;
+	background-color: #fff;
+
+	padding: .5rem;
+	border-top-right-radius: 5px;
+	box-shadow: 1px -1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.message-error {
+	composes: message;
+
+	color: #e74c3c;
 }

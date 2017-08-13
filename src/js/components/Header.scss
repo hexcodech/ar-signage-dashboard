@@ -51,7 +51,7 @@ html {
 	align-content: center;
 }
 
-.menu li {
+.menu li.svg {
 	display: inline-block;
 	margin-left: 1rem;
 
@@ -75,8 +75,27 @@ html {
 
 		height: 1rem;
 		width: 1rem;
+
+		&.clock {
+			height: 1.5rem;
+			width: 1.5rem;
+		}
 	}
 }
+
+.minutes {
+	background-color: transparent;
+	color: #fff;
+	font-size: 1.8rem;
+	border: #fff 2px solid;
+	border-radius: 5px;
+
+	padding: 0 .25rem;
+
+	margin-left: 1rem;
+	margin-right: -.5rem;
+}
+
 .menu li:last-child {
 	margin-right: 1rem;
 }
