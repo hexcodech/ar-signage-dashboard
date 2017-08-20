@@ -12,3 +12,10 @@ export const setActiveRoom = roomId => {
 		roomId
 	};
 };
+
+export const setActiveRoomIfNeeded = roomId => {
+	return {
+		type: "SET_ACTIVE_ROOM_IF_NEEDED",
+		roomId
+	};
+};

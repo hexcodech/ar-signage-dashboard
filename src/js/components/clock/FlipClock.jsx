@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { setTimer, stopTimer } from "js/actions/timers";
+import { setTimer_, setTimer, stopTimer } from "js/actions/timers";
 
 import Digit from "js/components/clock/Digit";
 
@@ -17,9 +17,9 @@ class FlipClock extends React.Component {
 			const { dispatch, timers } = this.props;
 
 			timers.forEach(timer => {
-				if (timer.running) {
+				if (timer && timer.running && timer.seconds) {
 					if (timer.seconds > 0) {
-						dispatch(setTimer(timer.roomId, timer.seconds - 1));
+						dispatch(setTimer_(timer.roomId, timer.seconds - 1));
 					} else if (timer.seconds <= 0) {
 						dispatch(stopTimer(timer.roomId));
 					}
@@ -31,6 +31,10 @@ class FlipClock extends React.Component {
 	render = () => {
 		const { timers, activeRoom } = this.props;
 		const timer = timers.filter(timer => timer.roomId === activeRoom)[0];
+
+		if (!timer) {
+			return null;
+		}
 
 		const minuteString = ("0" + Math.floor(timer.seconds / 60)).slice(-2);
 		const secondString = ("0" + timer.seconds % 60).slice(-2);

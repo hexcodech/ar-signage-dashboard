@@ -31,7 +31,7 @@ const fetchHints = () => {
 	return dispatch => {
 		dispatch(requestHints());
 
-		return fetchApi("hint", "GET", {})
+		return fetchApi("media", "GET", {})
 			.then(hints => {
 				dispatch(receiveHints(hints, Date.now()));
 			})
@@ -102,7 +102,7 @@ const fetchHint = (hintId = 0) => {
 	return dispatch => {
 		dispatch(requestHint(hintId));
 
-		return fetchApi("hint/" + hintId, "GET", {})
+		return fetchApi("media/" + hintId, "GET", {})
 			.then(fetchedHint => {
 				dispatch(receiveHint(fetchedHint, Date.now()));
 			})

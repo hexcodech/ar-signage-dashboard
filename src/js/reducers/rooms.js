@@ -1,7 +1,7 @@
 const rooms = (
 	state = [
-		{ roomId: "room1", friendlyName: "Room 1" },
-		{ roomId: "room2", friendlyName: "Room 2" }
+		/*{ roomId: "room1", friendlyName: "Room 1" },
+		{ roomId: "room2", friendlyName: "Room 2" }*/
 	],
 	action
 ) => {

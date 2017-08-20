@@ -1,7 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { setTarget, putDisplay, clearDisplay } from "js/actions/displays";
+import {
+	setTarget,
+	invalidateDisplay,
+	fetchDisplayIfNeeded,
+	putDisplay,
+	clearDisplay
+} from "js/actions/displays";
 
 import CloseCircleOutlineIcon from "mdi-react/CloseCircleOutlineIcon";
 import PencilCircleOutlineIcon from "mdi-react/PencilCircleOutlineIcon";
@@ -20,8 +26,15 @@ const Display = ({ dispatch, display }) => {
 
 	let styles = {};
 
-	if (media.type && media.type.startsWith("image")) {
+	if (media && media.type && media.type.startsWith("image")) {
 		styles.backgroundImage = "url(" + media.url + ")";
+	}
+
+	if (display.media.remaining > 0 && !isNaN(display.media.remaining)) {
+		setTimeout(() => {
+			dispatch(invalidateDisplay(displayId));
+			dispatch(fetchDisplayIfNeeded(displayId));
+		}, 1000);
 	}
 
 	return (
@@ -57,6 +70,7 @@ const Display = ({ dispatch, display }) => {
 										putDisplay({
 											...display,
 											media: {
+												url: null,
 												type: "text/plain",
 												text
 											}
@@ -77,10 +91,11 @@ const Display = ({ dispatch, display }) => {
 							<video styleName="video-thumbnail" muted>
 								<source src={media.url + "#t=0.1"} type={media.type} />
 							</video>
-							<div
-								styleName="progress"
-								style={{ width: media.progress + "%" }}
-							/>
+							<div styleName="remaining">
+								{media.remaining
+									? media.remaining + " Sekunden verbleiben"
+									: null}
+							</div>
 						</div>
 					: null}
 				{isFetching && <div styleName="message">Aktualisiere...</div>}

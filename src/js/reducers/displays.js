@@ -1,15 +1,16 @@
 const displays = (
 	state = [
-		{
+		/*{
 			displayId: "display1",
 			friendlyName: "Hotel",
 			roomId: "room1",
 			media: {
 				url: "http://www.htmgarcia.com/themes/cacoon/images/spaceboundd.mp4",
 				type: "video/mp4",
-				progress: 50
+				remaining: 50
 			},
-			didInvalidate: true
+			didInvalidate: true,
+			isFetching: false
 		},
 		{
 			displayId: "display2",
@@ -17,11 +18,12 @@ const displays = (
 			roomId: "room1",
 			media: {
 				type: "text/plain",
-				text: "le PENîS",
+				text: "text",
 				url: null,
-				progress: 0
+				remaining: 0
 			},
-			didInvalidate: true
+			didInvalidate: true,
+			isFetching: false
 		},
 		{
 			displayId: "display3",
@@ -30,9 +32,10 @@ const displays = (
 			media: {
 				type: "image/jpg",
 				url: "/img/ar-test.jpg",
-				progress: 0
+				remaining: 0
 			},
-			didInvalidate: true
+			didInvalidate: true,
+			isFetching: false
 		},
 		{
 			displayId: "display4",
@@ -43,9 +46,10 @@ const displays = (
 				text:
 					"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua",
 				url: null,
-				progress: 0
+				remaining: 0
 			},
-			didInvalidate: true
+			didInvalidate: true,
+			isFetching: false
 		},
 		{
 			displayId: "display5",
@@ -54,9 +58,10 @@ const displays = (
 			media: {
 				type: "image/jpg",
 				url: "/img/ar-test.jpg",
-				progress: 0
+				remaining: 0
 			},
-			didInvalidate: true
+			didInvalidate: true,
+			isFetching: false
 		},
 		{
 			displayId: "display6",
@@ -65,10 +70,11 @@ const displays = (
 			media: {
 				type: null,
 				url: null,
-				progress: 0
+				remaining: 0
 			},
-			didInvalidate: true
-		}
+			didInvalidate: true,
+			isFetching: false
+		}*/
 	],
 	action
 ) => {
@@ -99,8 +105,8 @@ const displays = (
 			return action.displays.map(display => {
 				return {
 					...display,
+					target: false,
 					lastUpdated: action.receivedAt,
-
 					isFetching: false,
 					didInvalidate: false
 				};
@@ -114,20 +120,7 @@ const displays = (
 
 		case "REQUEST_DISPLAY":
 		case "PUT_DISPLAY":
-			return [
-				...state.filter(display => {
-					if (display.displayId === action.display.displayId) {
-						tmp = display;
-						return false;
-					}
-
-					return true;
-				}),
-				{
-					...tmp,
-					isFetching: true
-				}
-			];
+			return [...state];
 		/*return [
 				...state.filter(display => {
 					return display.displayId != action.display.displayId;
@@ -171,6 +164,7 @@ const displays = (
 				}),
 				{
 					...action.display,
+					target: false,
 					isFetching: false,
 					didInvalidate: false,
 					lastUpdated: action.receivedAt

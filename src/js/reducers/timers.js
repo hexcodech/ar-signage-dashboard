@@ -52,6 +52,8 @@ const timers = (
 					return { ...timer, seconds: 3600, running: !timer.running };
 				})
 			];
+		case "RECEIVE_TIMERS":
+			return [...action.timers];
 		default:
 			return state;
 	}

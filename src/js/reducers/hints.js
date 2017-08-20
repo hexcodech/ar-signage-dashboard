@@ -1,6 +1,6 @@
 const hints = (
 	state = [
-		{
+		/*{
 			url: "/img/ar-test.jpg",
 			type: "image/jpg",
 			didInvalidate: true,
@@ -17,7 +17,7 @@ const hints = (
 			type: "image/jpg",
 			didInvalidate: true,
 			roomId: "room2"
-		}
+		}*/
 	],
 	action
 ) => {

@@ -23,6 +23,7 @@ class Carousel extends React.Component {
 						onChange={e => {
 							dispatch(setActiveRoom(e.currentTarget.value));
 						}}
+						value={activeRoom}
 					>
 						{rooms.map(room => {
 							return (
@@ -36,7 +37,7 @@ class Carousel extends React.Component {
 				<div styleName="slider-wrapper">
 					{displays
 						.filter(display => {
-							return display.roomId === activeRoom;
+							return display.roomId == activeRoom;
 						})
 						.sort((a, b) => (a.friendlyName > b.friendlyName ? 1 : -1))
 						.map(display => {

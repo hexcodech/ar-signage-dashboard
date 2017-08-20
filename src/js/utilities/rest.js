@@ -1,5 +1,5 @@
 //should be created in the main project folder
-const API_URL = "localhost:8103";
+const API_URL = "http://192.168.178.73";
 const API_VERSION = false;
 
 export const fetchApi = (

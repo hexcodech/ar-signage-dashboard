@@ -1,5 +1,31 @@
 import { fetchApi } from "js/utilities/rest";
-import { receiveRooms } from "js/actions/rooms";
+import {
+	setActiveRoom,
+	setActiveRoomIfNeeded,
+	receiveRooms
+} from "js/actions/rooms";
+import { receiveTimers } from "js/actions/timers";
+
+const STRANGE = (dispatch, strangeRoomDisplayObjectThingy, notRisky = true) => {
+	const rooms = strangeRoomDisplayObjectThingy.map(room => {
+		return { roomId: room.roomId, friendlyName: room.friendlyName };
+	});
+	const displays = strangeRoomDisplayObjectThingy.map(room => {
+		return room.displays.map(display => {
+			return { ...display, roomId: room.roomId };
+		});
+	});
+	const timers = strangeRoomDisplayObjectThingy.map(room => {
+		return { ...room.timer, roomId: room.roomId };
+	});
+	dispatch(receiveRooms(rooms, Date.now()));
+	dispatch(setActiveRoomIfNeeded(rooms[0].roomId));
+	if (!notRisky) {
+		dispatch(setActiveRoom(rooms[0].roomId));
+	}
+	dispatch(receiveTimers(timers));
+	dispatch(receiveDisplays([].concat.apply([], displays), Date.now()));
+};
 
 export const invalidateDisplays = () => {
 	return {
@@ -34,18 +60,7 @@ const fetchDisplays = () => {
 
 		return fetchApi("display", "GET", {})
 			.then(strangeRoomDisplayObjectThingy => {
-				//nobody will read this anyway haha
-				const rooms = strangeRoomDisplayObjectThingy.map(room => {
-					return { roomId: room.roomId, friendlyName: room.friendlyName };
-				});
-				const displays = strangeRoomDisplayObjectThingy.map(room => {
-					return room.displays.map(display => {
-						return { ...display, roomId: room.roomId };
-					});
-				});
-
-				dispatch(receiveRooms(rooms, Date.now()));
-				dispatch(receiveDisplays(displays, Date.now()));
+				STRANGE(dispatch, strangeRoomDisplayObjectThingy);
 			})
 			.catch(error => {
 				dispatch(failDisplaysRequest(error));
@@ -80,10 +95,10 @@ export const fetchDisplaysIfNeeded = () => {
 	};
 };
 
-export const invalidateDisplay = (display = {}) => {
+export const invalidateDisplay = displayId => {
 	return {
 		type: "INVALIDATE_DISPLAY",
-		display
+		displayId
 	};
 };
 
@@ -126,9 +141,15 @@ const fetchDisplay = (displayId = 0) => {
 };
 
 const shouldFetchDisplay = (state = {}, displayId) => {
-	const display = state.displays.filter(display => {
-		return display.id == displayId;
-	})[0];
+	let display = state.app.displays.filter(display => {
+		return display.displayId == displayId;
+	});
+
+	if (display.length === 0) {
+		return false;
+	} else {
+		display = display[0];
+	}
 
 	if (display.isFetching) {
 		return false;
@@ -207,11 +228,9 @@ export const clearDisplays = (displayIds = []) => {
 	return dispatch => {
 		dispatch(clearDisplays_(displayIds));
 
-		return fetchApi("display/clear", "PUT", displayIds)
-			.then(updatedDisplays => {
-				dispatch(receiveDisplays(updatedDisplays, Date.now()));
-
-				return updatedDisplays;
+		return fetchApi("display/clear", "PUT", { displayIds: displayIds })
+			.then(strangeRoomDisplayObjectThingy => {
+				STRANGE(dispatch, strangeRoomDisplayObjectThingy);
 			})
 			.catch(error => {
 				dispatch(failDisplaysClear(error, displayIds));
@@ -224,11 +243,9 @@ export const clearDisplay = (displayId = 0) => {
 	return dispatch => {
 		dispatch(clearDisplays_([displayId]));
 
-		return fetchApi("display/clear", "PUT", [displayId])
-			.then(updatedDisplays => {
-				dispatch(receiveDisplays(updatedDisplays, Date.now()));
-
-				return updatedDisplays;
+		return fetchApi("display/clear", "PUT", { displayIds: [displayId] })
+			.then(strangeRoomDisplayObjectThingy => {
+				STRANGE(dispatch, strangeRoomDisplayObjectThingy);
 			})
 			.catch(error => {
 				dispatch(failDisplaysClear(error, [displayId]));
