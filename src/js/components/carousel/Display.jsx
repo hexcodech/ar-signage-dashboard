@@ -14,97 +14,111 @@ import PencilCircleOutlineIcon from "mdi-react/PencilCircleOutlineIcon";
 
 import "./Display.scss";
 
-const Display = ({ dispatch, display }) => {
-	const {
-		displayId,
-		friendlyName,
-		media,
-		target,
-		isFetching,
-		didInvalidate
-	} = display;
+class Display extends React.Component {
+	render = () => {
+		const { dispatch, display } = this.props;
 
-	let styles = {};
+		const {
+			displayId,
+			friendlyName,
+			media,
+			target,
+			isFetching,
+			didInvalidate
+		} = display;
 
-	if (media && media.type && media.type.startsWith("image")) {
-		styles.backgroundImage = "url(" + media.url + ")";
-	}
+		let styles = {};
 
-	if (display.media.remaining > 0 && !isNaN(display.media.remaining)) {
-		setTimeout(() => {
-			dispatch(invalidateDisplay(displayId));
-			dispatch(fetchDisplayIfNeeded(displayId));
-		}, 1000);
-	}
+		if (media && media.type && media.type.startsWith("image")) {
+			styles.backgroundImage = "url(" + media.url + ")";
+		}
 
-	return (
-		<div styleName="display-wrapper">
-			<h4>
-				{friendlyName}
-			</h4>
-			<div styleName={target ? "display-target" : "display"} style={styles}>
-				<div
-					styleName="overlay"
-					onClick={() => {
-						if (target) {
-							dispatch(setTarget(0));
-						} else {
-							dispatch(setTarget(displayId));
-						}
-					}}
-				>
-					<div styleName="icons">
-						<CloseCircleOutlineIcon
-							styleName="icon"
-							onClick={() => {
-								dispatch(clearDisplay(displayId));
-							}}
-						/>
-						<PencilCircleOutlineIcon
-							styleName="icon"
-							onClick={() => {
-								let text = window.prompt("Welcher Text soll angezeigt werden?");
+		if (
+			display.media &&
+			display.media.type &&
+			display.media.type.startsWith("video")
+		) {
+			console.log("setting timeout");
+			if (this.timeout) {
+				clearTimeout(this.timeout);
+			}
 
-								if (text) {
-									dispatch(
-										putDisplay({
-											...display,
-											media: {
-												url: null,
-												type: "text/plain",
-												text
-											}
-										})
+			this.timeout = setTimeout(() => {
+				console.log("updating..");
+
+				dispatch(invalidateDisplay(this.props.display.displayId));
+				dispatch(fetchDisplayIfNeeded(this.props.display.displayId));
+			}, 1000);
+		}
+
+		return (
+			<div styleName="display-wrapper">
+				<h4>
+					{friendlyName}
+				</h4>
+				<div styleName={target ? "display-target" : "display"} style={styles}>
+					<div
+						styleName="overlay"
+						onClick={() => {
+							if (target) {
+								dispatch(setTarget(0));
+							} else {
+								dispatch(setTarget(displayId));
+							}
+						}}
+					>
+						<div styleName="icons">
+							<CloseCircleOutlineIcon
+								styleName="icon"
+								onClick={() => {
+									dispatch(clearDisplay(displayId));
+								}}
+							/>
+							<PencilCircleOutlineIcon
+								styleName="icon"
+								onClick={() => {
+									let text = window.prompt(
+										"Welcher Text soll angezeigt werden?"
 									);
-								}
-							}}
-						/>
+
+									if (text) {
+										dispatch(
+											putDisplay({
+												...display,
+												media: {
+													url: null,
+													type: "text/plain",
+													text
+												}
+											})
+										);
+									}
+								}}
+							/>
+						</div>
 					</div>
-				</div>
-				{media.type && media.type.startsWith("text")
-					? <div styleName="text">
-							{media.text}
-						</div>
-					: null}
-				{media.type && media.type.startsWith("video")
-					? <div>
-							<video styleName="video-thumbnail" muted>
-								<source src={media.url + "#t=0.1"} type={media.type} />
-							</video>
-							<div styleName="remaining">
-								{media.remaining
-									? media.remaining + " Sekunden verbleiben"
-									: null}
+					{media.type && media.type.startsWith("text")
+						? <div styleName="text">
+								{media.text}
 							</div>
-						</div>
-					: null}
-				{isFetching && <div styleName="message">Aktualisiere...</div>}
-				{didInvalidate &&
-					!isFetching &&
-					<div styleName="message-error">Fehler!</div>}
+						: null}
+					{media.type && media.type.startsWith("video")
+						? <div>
+								<video styleName="video-thumbnail" muted>
+									<source src={media.url + "#t=0.1"} type={media.type} />
+								</video>
+								<div styleName="remaining">
+									{media.remaining
+										? media.remaining + " Sekunden verbleiben"
+										: null}
+								</div>
+							</div>
+						: null}
+					{isFetching && <div styleName="message">Aktualisiere...</div>}
+				</div>
 			</div>
-		</div>
-	);
-};
+		);
+	};
+}
 
 export default connect()(Display);
