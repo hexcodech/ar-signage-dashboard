@@ -22,7 +22,7 @@ class Header extends React.Component {
 				<div styleName="header-content">
 					<div styleName="side">
 						<div styleName="logo">
-							<img src="/img/ar-logo.png" />
+							<img src="img/ar-logo.png" />
 						</div>
 					</div>
 					<div styleName="side">
