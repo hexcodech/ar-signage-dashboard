@@ -38,6 +38,45 @@ html {
 	height: 1em;
 }
 
+.room-select {
+	position: relative;
+	margin-left: 2rem;
+	background-color: #b11c20;
+	border-radius: 5px;
+	display: flex;
+
+	select {
+		color: #fff;
+		padding: .5rem 1rem .5rem .5rem;
+		outline: none;
+		background-color: transparent;
+
+		font-size: 1rem;
+
+		border: none;
+
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none; /* remove default arrow */
+	}
+
+	&:after {
+		position: relative;
+		top: .75rem;
+		right: .5rem;
+
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 10.4px 6px 0 6px;
+		border-color: #ffffff transparent transparent transparent;
+		content: "";
+
+		pointer-events: none;
+	}
+}
+
+
 .menu {
 	color: inherit;
 	display: flex;
@@ -86,7 +125,7 @@ html {
 .minutes {
 	background-color: transparent;
 	color: #fff;
-	font-size: 1.8rem;
+	font-size: 1.5rem;
 	border: #fff 2px solid;
 	border-radius: 5px;
 
