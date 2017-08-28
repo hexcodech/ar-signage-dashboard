@@ -18,6 +18,22 @@ class Carousel extends React.Component {
 
 		return (
 			<div styleName="carousel">
+				<div styleName="room-select">
+					<select
+						onChange={e => {
+							dispatch(setActiveRoom(e.currentTarget.value));
+						}}
+						value={activeRoom}
+					>
+						{rooms.map(room => {
+							return (
+								<option key={room.roomId} value={room.roomId}>
+									{room.friendlyName}
+								</option>
+							);
+						})}
+					</select>
+				</div>
 				<div styleName="slider-wrapper">
 					{displays
 						.filter(display => {

@@ -14,7 +14,7 @@ class Header extends React.Component {
 	}
 
 	render = () => {
-		const { dispatch, activeRoom, rooms} = this.props;
+		const { dispatch, activeRoom } = this.props;
 		const { minutes } = this.state;
 
 		return (
@@ -23,22 +23,6 @@ class Header extends React.Component {
 					<div styleName="side">
 						<div styleName="logo">
 							<img src="img/ar-logo.png" />
-						</div>
-						<div styleName="room-select">
-							<select
-								onChange={e => {
-									dispatch(setActiveRoom(e.currentTarget.value));
-								}}
-								value={activeRoom}
-							>
-								{rooms.map(room => {
-									return (
-										<option key={room.roomId} value={room.roomId}>
-											{room.friendlyName}
-										</option>
-									);
-								})}
-							</select>
 						</div>
 					</div>
 					<div styleName="side">
@@ -147,8 +131,7 @@ class Header extends React.Component {
 
 const mapStateToProps = state => {
 	return {
-		activeRoom: state.app.activeRoom,
-		rooms: state.app.rooms
+		activeRoom: state.app.activeRoom
 	};
 };
 
