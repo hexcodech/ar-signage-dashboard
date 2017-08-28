@@ -105,7 +105,7 @@ class Display extends React.Component {
 					{media.type && media.type.startsWith("video")
 						? <div>
 								<video styleName="video-thumbnail" muted>
-									<source src={media.url + "#t=0.1"} type={media.type} />
+									<source src={media.url + "#t=30"} type={media.type} />
 								</video>
 								<div styleName="remaining">
 									{media.remaining
