@@ -24,9 +24,7 @@ class Hints extends React.Component {
 					].map(library => {
 						return (
 							<div key={library.type} styleName="mime">
-								<h3>
-									{library.friendlyName}
-								</h3>
+								<h3>{library.friendlyName}</h3>
 
 								<div styleName="hints">
 									{hints
@@ -43,9 +41,11 @@ class Hints extends React.Component {
 													key={hint.url}
 													styleName="hint"
 													style={
-														hint.type.startsWith("image/")
-															? { backgroundImage: "url(" + hint.url + ")" }
-															: {}
+														hint.type.startsWith("image/") ? (
+															{ backgroundImage: "url(" + hint.url + ")" }
+														) : (
+															{}
+														)
 													}
 													onClick={() => {
 														let target = displays.filter(
@@ -59,7 +59,8 @@ class Hints extends React.Component {
 																	...target,
 																	media: {
 																		url: hint.url,
-																		type: hint.type
+																		type: hint.type,
+																		headerVisible: hint.type.startsWith("video")
 																	}
 																})
 															).then(() => {
@@ -68,19 +69,21 @@ class Hints extends React.Component {
 														}
 													}}
 												>
-													{hint.type.startsWith("video")
-														? <video styleName="video-thumbnail">
-																<source
-																	src={hint.url + "#t=0.1"}
-																	type={hint.type}
-																/>
-															</video>
-														: null}
-													{hint.isFetching &&
-														<div styleName="message">Aktualisiere...</div>}
+													{hint.type.startsWith("video") ? (
+														<video styleName="video-thumbnail">
+															<source
+																src={hint.url + "#t=0.1"}
+																type={hint.type}
+															/>
+														</video>
+													) : null}
+													{hint.isFetching && (
+														<div styleName="message">Aktualisiere...</div>
+													)}
 													{hint.didInvalidate &&
-														!hint.isFetching &&
-														<div styleName="message-error">Fehler!</div>}
+													!hint.isFetching && (
+														<div styleName="message-error">Fehler!</div>
+													)}
 												</div>
 											);
 										})}

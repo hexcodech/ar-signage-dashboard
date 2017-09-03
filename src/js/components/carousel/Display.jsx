@@ -38,14 +38,11 @@ class Display extends React.Component {
 			display.media.type &&
 			display.media.type.startsWith("video")
 		) {
-			console.log("setting timeout");
 			if (this.timeout) {
 				clearTimeout(this.timeout);
 			}
 
 			this.timeout = setTimeout(() => {
-				console.log("updating..");
-
 				dispatch(invalidateDisplay(this.props.display.displayId));
 				dispatch(fetchDisplayIfNeeded(this.props.display.displayId));
 			}, 1000);
@@ -53,9 +50,7 @@ class Display extends React.Component {
 
 		return (
 			<div styleName="display-wrapper">
-				<h4>
-					{friendlyName}
-				</h4>
+				<h4>{friendlyName}</h4>
 				<div styleName={target ? "display-target" : "display"} style={styles}>
 					<div
 						styleName="overlay"
@@ -97,23 +92,21 @@ class Display extends React.Component {
 							/>
 						</div>
 					</div>
-					{media.type && media.type.startsWith("text")
-						? <div styleName="text">
-								{media.text}
+					{media.type && media.type.startsWith("text") ? (
+						<div styleName="text">{media.text}</div>
+					) : null}
+					{media.type && media.type.startsWith("video") ? (
+						<div>
+							<video styleName="video-thumbnail" muted>
+								<source src={media.url + "#t=0.1"} type={media.type} />
+							</video>
+							<div styleName="remaining">
+								{media.remaining ? (
+									media.remaining + " Sekunden verbleiben"
+								) : null}
 							</div>
-						: null}
-					{media.type && media.type.startsWith("video")
-						? <div>
-								<video styleName="video-thumbnail" muted>
-									<source src={media.url + "#t=0.1"} type={media.type} />
-								</video>
-								<div styleName="remaining">
-									{media.remaining
-										? media.remaining + " Sekunden verbleiben"
-										: null}
-								</div>
-							</div>
-						: null}
+						</div>
+					) : null}
 					{isFetching && <div styleName="message">Aktualisiere...</div>}
 				</div>
 			</div>
