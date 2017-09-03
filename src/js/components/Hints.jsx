@@ -72,7 +72,7 @@ class Hints extends React.Component {
 													{hint.type.startsWith("video") ? (
 														<video styleName="video-thumbnail">
 															<source
-																src={hint.url + "#t=0.1"}
+																src={hint.url + "#t=30"}
 																type={hint.type}
 															/>
 														</video>
