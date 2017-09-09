@@ -83,7 +83,8 @@ class Display extends React.Component {
 												media: {
 													url: null,
 													type: "text/plain",
-													text
+													text,
+													headerVisible: true
 												}
 											})
 										);
