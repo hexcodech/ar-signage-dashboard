@@ -60,7 +60,9 @@ class Hints extends React.Component {
 																	media: {
 																		url: hint.url,
 																		type: hint.type,
-																		headerVisible: hint.type.startsWith("video")
+																		headerVisible: !hint.type.startsWith(
+																			"video"
+																		)
 																	}
 																})
 															).then(() => {

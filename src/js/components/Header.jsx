@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { setActiveRoom } from "js/actions/rooms";
 
 import { startTimer, setTimer, stopTimer } from "js/actions/timers";
 
@@ -14,7 +15,7 @@ class Header extends React.Component {
 	}
 
 	render = () => {
-		const { dispatch, activeRoom, rooms} = this.props;
+		const { dispatch, activeRoom, rooms } = this.props;
 		const { minutes } = this.state;
 
 		return (

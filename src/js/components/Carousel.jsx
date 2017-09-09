@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { fetchDisplaysIfNeeded } from "js/actions/displays";
-import { setActiveRoom } from "js/actions/rooms";
 
 import "./Carousel.scss";
 
